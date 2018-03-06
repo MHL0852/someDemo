@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="node_modules/chartist/dist/chartist.min.css" rel="external nofollow">
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="temp.css">
+<script src="node_modules/chartist/dist/chartist.min.js"></script>
+<body>
+<div id="app">
+<div style="display: none ">{{partnerrofit}}</div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <p>酷送-冷链</p>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="data row">
+        <div class="btn-group begin ">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" v-text="beginDate">
+                 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" @click="beginDataChange">
+                <template v-for="val in month">
+                    <li><a href="#">{{val}}月</a></li>
+                </template>
+            </ul>
+        </div>
+        <div class="btn-group end">
+            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" v-text="endDate">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <template v-for="val in month">
+                    <li><a href="#" @click="endDataChange">{{val}}月</a></li>
+                </template>
+            </ul>
+        </div>
+        <button class="btn btn-info " @click="search"><span class="glyphicon glyphicon-search"></span>点击查询</button>
+        <div class="btn-group partner">
+            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                合伙人 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <template v-for="item in partnerList">
+                    <li><a href="#" @click="checkPartner">{{item}}</a></li>
+                </template>
+            </ul>
+        </div>
+        <i type="text" class="partnerList btn btn-default" @click="clearPartner">清空合伙人</i>
+        <template v-for="val in partnerListShow">
+            <i class="partners">{{val+" "}} <span class="delete glyphicon  glyphicon-remove" @click="clearOnePartner"></span></i>
+        </template>
+    </div>
+
+
+    <div class="list_detail container" style="display: none">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>合伙人</th>
+                <th>收益</th>
+                <th>成本</th>
+                <th>利润</th>
+            </tr>
+            </thead>
+            <tbody>
+            <template v-for="(par,index) in partnerListShow">
+                <tr>
+                    <th>{{par}}</th>
+                    <th>{{partnerIO[index].income[0]}}</th>
+                    <th>{{partnerIO[index].cost[0]}}</th>
+                    <th>{{partnerIO[index].income[0]-partnerIO[index].cost[0]}}</th>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <a class="bar-chart" href="#/detail">
+            <div id="main" style="width:90%;height:200px;"></div>
+    </a>
+
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="node_modules/chart/index.js"></script>
+<script src="node_modules/echarts/dist/echarts.min.js"></script>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-router/dist/vue-router.js"></script>
+<script src="temp.js"></script>
+<script>
+let pic=document.getElementsByClassName('bar-chart')[0];
+let list_detail=document.getElementsByClassName('list_detail')[0];
+pic.onclick=function (e) {
+    this.style="display:none";
+    list_detail.style="display:block"
+};
+list_detail.onclick=function (e) {
+    this.style="display:none";
+    pic.style="display:block"
+}
+</script>
+</body>
+</html>
